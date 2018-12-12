@@ -1,0 +1,63 @@
+<html>
+<head>
+	<title>
+		함수형 프로그래밍 개요
+	</title>
+</head>
+<body>
+
+
+</body>
+<script>
+	// 일급함수 : 함수를 값으로 이용
+	var f1 = function (a) {
+		return a * a;
+	};
+	console.log(f1);
+
+	function f3(f) {
+		return f();
+	}
+
+	console.log(f3(function () {
+		return 10;
+	}));
+
+	console.log(f3(function () {
+		return 20;
+	}));
+
+	/* add_maker */
+
+	function add_maker(a) {
+		return function (b) {
+			return a + b;
+		}
+	}
+
+	var add10 = add_maker(10);
+	console.log(add10(20));
+
+	var add5 = add_maker(5);
+	console.log(add5(15));
+
+	function f4(f1, f2, f3) {
+		return f3(f1() + f2());
+	}
+
+	console.log(
+		f4(
+			function () {
+				return 2;
+			},
+			function () {
+				return 1;
+			},
+			function (a) {
+				return a * a;
+			}
+		)
+	);
+
+</script>
+</html>
