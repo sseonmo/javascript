@@ -167,6 +167,7 @@
 	);
 	
 //	4. _reduce 만들기
+	/*
 	var _slice = Array.prototype.slice;
 
 	function _rest(list, num) {
@@ -174,9 +175,9 @@
 	}
 	
 	function _reduce(list, iter, memo) {
-		/* 내방식
+		/!* 내방식
 		memo = memo === undefined ? 0 : memo;
-		*/
+		*!/
 		if (arguments.length == 2) {
 			memo = list[0];
 			list = _rest(list);
@@ -186,7 +187,7 @@
 			 );
 		return memo;
 	}
-	
+	*/
 	console.clear();
 	/*
 	var add = _curry(function (a, b) {
@@ -198,7 +199,7 @@
 	
 //	5.  파이프라인 만드리
 	// 1. _pipe - 함수를 리턴하는 함수
-	function _pipe() {
+	/*function _pipe() {
 		var fns = arguments;
 		return function (arg) {
 			return _reduce(fns
@@ -206,7 +207,7 @@
 							, arg
 							);
 		};
-	}
+	}*/
 	
 	var f1  = _pipe(
 		function(a){ return a + 1; }
@@ -216,10 +217,10 @@
 	console.log(f1(1));
 	
 	// 2. _go - 즉시 실행되는 _pipe 함수
-	function _go(arg) {
+	/*function _go(arg) {
 		var fns = _rest(arguments);
 		return _pipe.apply(null, fns)(arg);
-	}
+	}*/
 	
 	_go( 1
 		, function(a){ return a + 1; }
@@ -281,5 +282,19 @@
 		, console.log
 	);
 	
+	// 4. 화살표 함수 간단히
+	/*var a = function(user){ return user.age > 30; };
+	var a = user => user.age > 30 ;
+	
+	var add = function(a, b) {return a + b};
+	var add = (a, b) => a + b ;
+	var add = (a, b) => {
+		return a + b;
+	};
+
+	var add123 = (a, b) => ({ val : a + b});
+	console.dir(add123);
+	console.log(add123(1,2).val);
+	*/
 </script>
 </html>
