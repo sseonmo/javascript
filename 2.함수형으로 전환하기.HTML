@@ -328,5 +328,23 @@
 	_each({12 : "ID", 19 : "HD", 21 : "TD"}, console.log);
 	_map({12 : "ID", 19 : "HD", 21 : "TD"}, console.log);
 	
+	_go( users
+		, _map(_get("name"))
+		, _map( name => name.toLowerCase())
+		, console.log
+	);
+	
+	_go( null
+		, _map(_get("name"))
+		, _map( name => name.toLowerCase())
+		, console.log
+	);
+	
+	_go( ({1 : users[0], 3 : users[1], 5 : users[2]})
+		, _map( user => user.name.toLowerCase() )
+		, console.log
+	);
+	
+	
 </script>
 </html>
