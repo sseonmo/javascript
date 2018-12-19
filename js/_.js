@@ -90,3 +90,13 @@ function _is_object(obj) {
 function _keys(obj) {
 	return _is_object(obj) ? Object.keys(obj) : [];
 }
+
+var _values = _map(_identity);
+
+function _identity(val) {
+	return val;
+}
+
+function _plcuk(data, key) {
+	return _map(data, _get(key));
+}
