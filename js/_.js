@@ -97,6 +97,18 @@ function _identity(val) {
 	return val;
 }
 
-function _plcuk(data, key) {
+function _pluck(data, key) {
 	return _map(data, _get(key));
 }
+
+function _negate(func) {
+	return function (val) {
+		return !func(val);
+	}
+}
+
+function _reject(list, predi) {
+	return _filter(list, _negate(predi));
+}
+
+var _compact = _filter(_identity);
