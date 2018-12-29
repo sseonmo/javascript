@@ -11,14 +11,14 @@
 <script>
 
 	var users = [
-		{id: 1, name: "ID", age: 32},
-		{id: 2, name: "HA", age: 25},
-		{id: 3, name: "BJ", age: 32},
-		{id: 4, name: "PJ", age: 28},
-		{id: 5, name: "JE", age: 27},
-		{id: 6, name: "JM", age: 32},
-		{id: 7, name: "JI", age: 31},
-		{id: 8, name: "MP", age: 23}
+		{id: 10, name: "ID", age: 32},
+		{id: 20, name: "HA", age: 25},
+		{id: 30, name: "BJ", age: 33},
+		{id: 40, name: "PJ", age: 28},
+		{id: 50, name: "JE", age: 27},
+		{id: 60, name: "JM", age: 32},
+		{id: 70, name: "JI", age: 31},
+		{id: 80, name: "MP", age: 23}
 	];
 // 컬렉션 중심 프로그래밍의 4가지 유형과 함수
 
@@ -79,7 +79,96 @@
 
 
 //	3. 찾아내기 - find, some, every 등
+	// 1. find 만들기
+	/*var _find = _curryr(function (list, predi) {
+		var keys = _keys(list);
+		// console.log("keys", keys);
+		for (var i = 0, len = keys.length; i < len; i++){
+			var val = list[keys[i]];
+			if(predi(val)) return val;
+		}
+	});*/
+
+	console.log(
+		_find(users, function (user) {
+			return user.age > 32;
+		})
+	);
+
+	// 2. find_index 만들기
+	/*var _find_index = _curryr(function (list, predi) {
+		var keys = _keys(list);
+		for (var i = 0, len = keys.length; i < len; i++){
+			if(predi(list[keys[i]])) return i;
+		}
+		return -1;
+	});*/
+
+	console.log(
+		_find(users, function (user) {
+			return user.id === 50;
+		})
+	);
+	console.log(
+		_find_index(users, function (user) {
+			return user.id === 50;
+		})
+	);
+
+	_go(users
+		, _find(function (user) {
+			return user.id === 30;
+		})
+		, _get('name')
+		, console.log
+	);
+
+	// 3. some
+	/*function _some(data, predi) {
+		return _find_index(data, predi || _identity ) !== -1;
+	}*/
+
+	console.log('_some',
+		_some([1, 2, 5, 10, 20], function (val) {
+			return val > 10;
+		})
+	);
+
+	// 4. every
+	/*function _every(data, predi) {
+		return _find_index(data, _negate(predi || _identity) ) === -1 ;
+	}*/
+
+	console.log('_every',
+		_every([12, 24, 5, 10, 20], function (val) {
+			return val > 5;
+		})
+	);
+
+	// _some
+	console.log('_some', _some([1, 2, 0, 10]) );
+	console.log('_some', _some([false, 0, null]) );
+	// _evert
+	console.log('_every', _every([1, 2, 10]) );
+	console.log('_every', _every([1, 2, 10, undefined]) );
+	console.log('_every', _every([false, 0, null]) );
+
+	function compareNumbers(x , y) {
+		console.log(x, y);
+		if (x < y) {
+			return -1;
+		}
+		if (x > y) {
+			return 1;
+		}
+		return 0;
+	}
+	console.log([3, 1, 4, 1, 5, 9].sort(compareNumbers));
+//	1-3-4-1-5-9
+//	1-3-4-1-5-9
+//	1-1-3-4-5-9
 //	4. 접기 - reduce, min, max, group_by, count_by등
+
 
 
 	

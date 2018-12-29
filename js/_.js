@@ -112,3 +112,28 @@ function _reject(list, predi) {
 }
 
 var _compact = _filter(_identity);
+
+var _find = _curryr(function (list, predi) {
+	var keys = _keys(list);
+	// console.log("keys", keys);
+	for (var i = 0, len = keys.length; i < len; i++){
+		var val = list[keys[i]];
+		if(predi(val)) return val;
+	}
+});
+
+var _find_index = _curryr(function (list, predi) {
+	var keys = _keys(list);
+	for (var i = 0, len = keys.length; i < len; i++){
+		if(predi(list[keys[i]])) return i;
+	}
+	return -1;
+});
+
+function _some(data, predi) {
+	return _find_index(data, predi || _identity ) !== -1;
+}
+
+function _every(data, predi) {
+	return _find_index(data, _negate(predi || _identity) ) === -1 ;
+}
