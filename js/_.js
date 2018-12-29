@@ -107,9 +107,9 @@ function _negate(func) {
 	}
 }
 
-function _reject(list, predi) {
+var _reject = _curryr(function (list, predi) {
 	return _filter(list, _negate(predi));
-}
+});
 
 var _compact = _filter(_identity);
 
