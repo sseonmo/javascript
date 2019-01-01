@@ -155,9 +155,9 @@
 
 //	4. 접기 - reduce, min, max, group_by, count_by등
 	// 1. min, max, min_by, max_by
+/*
 
 	function _min(data) {
-		// debugger;
 		return _reduce(data, function (a, b) {
 			return a < b ? a : b
 		});
@@ -168,11 +168,12 @@
 			return a > b ? a : b
 		});
 	}
+*/
 
 	console.log(_min([1, 2, 4, 10, 5, -4]));
 	console.log(_max([1, 2, 4, 10, 5, -4]));
 
-	function _min_by(data, iter) {
+/*	function _min_by(data, iter) {
 		return _reduce(data, function (a, b) {
 			return iter(a) < iter(b) ? a : b;
 		});
@@ -182,11 +183,11 @@
 		return _reduce(data, function (a, b) {
 			return iter(a) > iter(b) ? a : b;
 		});
-	}
+	}*/
 
-	var _min_by = _curryr(_min_by),
+	/*var _min_by = _curryr(_min_by),
 		_max_by = _curryr(_max_by);
-
+	*/
 	console.log(_min_by([1, 2, 4, 10, 5, -4], Math.abs));
 	console.log(_max_by([1, 2, 4, 10, 5, -4, -11], Math.abs));
 	console.log(_max_by(users, function (user) {
@@ -222,10 +223,11 @@
 		{id: 50, name: "JE", age: 27},
 		{id: 60, name: "JM", age: 32},
 		{id: 70, name: "JI", age: 41},
-		{id: 80, name: "MP", age: 25}
+		{id: 80, name: "MP", age: 25},
+		{id: 90, name: "MP", age: 12}
 	];
 
-	function _push(obj, key, val) {
+	/*function _push(obj, key, val) {
 		(obj[key] = obj[key] || [] ).push(val);
 		return obj;
 	}
@@ -237,7 +239,7 @@
 	});
 	var _head = function (list) {
 		return list[0];
-	};
+	};*/
 
 	_go(users2
 		, _group_by(function (user) {
@@ -259,6 +261,80 @@
 	);
 
 	// 3. conunt_by, inc
+	console.clear();
+	/*var _inc = function (count, key) {
+		count[key] ? count[key]++ : count[key] = 1
+		return count;
+	};
+
+	var _count_by = _curryr(function (data, iter) {
+		return _reduce(data, function (count, val) {
+			return _inc(count, iter(val));
+		}, {});
+	});*/
+
+	_go(users2
+		, _count_by(function (user) {
+			return user.age - user.age % 10;
+		})
+		, console.log
+	);
+
+	_go(users2
+		, _count_by(function (user) {
+			return user.name[0];
+		})
+		, console.log
+	);
+
+	_map(users[0], console.log);
+	console.log(
+		_map(users[0], function (val, key) {
+			return [key, val];
+		})
+	);
+
+	console.log(_pairs(users[0]));
+
+	console.clear();
+
+	var _document_write = document.write.bind(document);
+
+	_go(users2
+		, _filter(user => user.age > 19)
+		,  _count_by(function (user) {
+			return user.age - user.age % 10;
+		})
+		, _map((count, key) => `<li>${key}대는 ${count}명 입니다.</li>`)
+		, list => '<ul>'+list.join('')+'</ul>'
+		// , html => document.write(html)
+		// , document.write => document가 this 로 존재해야 사용가능 함.
+		, _document_write
+	);
+
+	var f1 = _pipe(
+		_count_by(function (user) {
+			return user.age - user.age % 10;
+		})
+		, _map((count, key) => `<li>${key}대는 ${count}명 입니다.</li>`)
+		, list => '<ul>'+list.join('')+'</ul>'
+		// , html => document.write(html)
+		// , document.write => document가 this 로 존재해야 사용가능 함.
+		, _document_write
+	);
+
+	// f1(users2);
+
+	var f2 = _pipe(
+		_filter(user => user.age > 19)
+		, f1
+	);
+
+	// f2(users2);
+
+	_go(users2, _reject( user => user.age < 20), f1);
+	_go(users2, _filter( user => user.age < 20), f1);
+
 
 
 	
