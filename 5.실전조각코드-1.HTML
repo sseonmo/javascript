@@ -146,5 +146,54 @@
 		}
 		, console.log
 	);
+
+//	5. users + posts + comments (index_by와 group_by 로 효율 높이기)
+// index_by - indexing를 새롭게 한다. 1 : 1 매핑
+// group_by - indexing를 새롭게 한다. 1 : M 매핑
+/*	var comment2 = _.map(comments, function (comment) {
+		return _.extend({
+				user: _.find(users, function (user) {
+					return comment.user_id == user.id
+				})
+			}, comment
+		)
+	});*/
+	var users2 = _.index_by(users, 'id');
+	function find_user_by_id(user_id) {
+		return users2[user_id];
+	}
+
+	var comments2 = _.go(
+		comments
+		, _.map(function (comment) {
+			return _.extend({
+				user: find_user_by_id(comment.user_id)
+			}, comment)
+		})
+		, _.group_by('post_id')
+	);
+
+	var posts2 = _.go(
+		posts
+		, _.map(function (post) {
+			return _.extend(
+				{
+					comment: comments2[post.id]
+					, user: find_user_by_id(post.user_id)
+				}
+				, post)
+		})
+		, _.group_by('user_id')
+	);
+	console.log(posts2);
+
+	var users3 = _.map(users2, function (user) {
+		return _.extend({post : posts2[user.id] || []}, user)
+	});
+
+	console.log(users3);
+//	5.1 특정인의 posts의 모든 comments 거르기
+//	5.2 특정인의 postsd에 comments를 단 친구의 이름들 뽑기
+//
 </script>
 </html>
